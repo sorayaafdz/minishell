@@ -69,7 +69,7 @@ int	split_ops(char *input, char ***segments_out,
 	st.seg_count = 0;
 	st.segments = NULL;
 	st.ops = NULL;
-	split_loop_and_append(input, &st);
+	extract_and_add_seg(input, &st);
 	*segments_out = st.segments;
 	*ops_out = st.ops;
 	*count_out = st.seg_count;

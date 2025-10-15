@@ -6,7 +6,7 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:02:20 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/15 17:57:08 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/15 19:49:33 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,10 +244,10 @@ void		process_command(t_minishell *mini, char *segment, char *inner);
 void		process_add_heredoc(t_minishell *mini, t_token **token, int *index);
 void		handle_word_token(t_minishell *mini, t_token *token);
 void		delete_marker_inplace(char *s);
-void		syntax_error_unexpected(t_minishell *mini, const char *tok);
+void		report_syntax_error(t_minishell *mini, const char *tok);
 void		process_red_inout(t_minishell *mini, t_token **token);
 void		run_pipeline(t_minishell *mini);
-void		split_loop_and_append(char *input, t_split_state *st);
+void		extract_and_add_seg(char *input, t_split_state *st);
 void		add_matches(t_minishell *mini, t_glob_ctx *ctx, size_t idx);
 void		free_matches_recursive(t_glob_ctx *ctx, size_t idx);
 void		split_path(const char *str, char **dir_out, char **base_out);
@@ -280,7 +280,7 @@ int			check_consecutive_pipes(const char *s, t_minishell *mini,
 				int in_sq, int in_dq);
 int			is_only_spaces(const char *s);
 int			has_redir_type(t_command *cmd, int type);
-int			check_syntax_pipes(t_token *tokenizer);
+int			check_pipe_syntax(t_token *tokenizer);
 int			fill_tokens(t_minishell *mini, char *input);
 int			init_tokenizer(t_minishell *mini, char *input);
 int			tokenize_input(t_minishell *mini);
@@ -300,15 +300,16 @@ int			str_has_slash(const char *s);
 int			match_class(const char **pp, char c);
 int			match_glob(const char *pat, const char *s);
 int			insert_sorted(char ***arr, size_t *count, size_t *cap, char *s);
-int			handle_operator(char *input, t_split_state *st, char *op);
+int			process_double_operator(char *input, t_split_state *st, char *op);
 int			split_cmd_line(char *input, char ***segments,
 				char ***ops, int *seg_count);
-int			handle_quote_paren(char *input, t_split_state *st);
+int			handle_quote_parenthesis(char *input, t_split_state *st);
 int			try_process_operator(char *input, t_split_state *st);
 int			ends_with_unquoted_redir(const char *s, int in_sq, int in_dq);
 int			ends_with_operator(const char *s);
 int			process_input_line(char *input, t_minishell *mini);
-int			append_ptr(char ***arr, int new_size, int copy_count, char *value);
+int			add_str_to_array(char ***arr, int new_size,
+				int copy_count, char *value);
 int			expand_matches(char *str, t_minishell *mini);
 int			try_open_dir(t_glob_ctx *ctx, char *str, t_minishell *mini);
 int			init_glob(const char *str, t_minishell *mini, t_glob_ctx *ctx);
@@ -348,7 +349,7 @@ const char	*process_class_content(const char *p, char c, int *matched);
 t_env		*create_env_var(char *name, char *value, int exported);
 t_env		*find_env(t_env *env_list, char const *name);
 t_env		*create_env_list(char **envp, t_minishell *mini);
-t_token		*check_expansion(t_minishell *mini, char *val);
+t_token		*process_expansion(t_minishell *mini, char *val);
 t_token		*add_token(t_minishell *mini, char *value);
 t_token		*get_valid_outfile_token(t_minishell *mini, t_token **token);
 t_redir		*init_redir(int type, char const *filename);

@@ -6,7 +6,7 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:35:56 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/15 16:18:31 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:40:20 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	fill_tokens(t_minishell *mini, char *input)
 	return (success);
 }
 
-int	check_syntax_pipes(t_token *tokenizer)
+int	check_pipe_syntax(t_token *tokenizer)
 {
 	if (!tokenizer)
 		return (1);
@@ -133,7 +133,7 @@ void	process_command(t_minishell *mini, char *segment, char *inner)
 			free(inner);
 		return ;
 	}
-	if (!check_syntax_pipes(mini->t_list))
+	if (!check_pipe_syntax(mini->t_list))
 	{
 		update_env_status(mini);
 		free_token_list(mini->t_list);

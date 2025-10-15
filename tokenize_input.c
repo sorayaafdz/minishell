@@ -6,7 +6,7 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:30:35 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/14 15:29:19 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:47:50 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	replace_char_inplace(char *s, char find, char replace)
 	}
 }
 
-t_token	*check_expansion(t_minishell *mini, char *val)
+t_token	*process_expansion(t_minishell *mini, char *val)
 {
 	t_token	*new_token;
 
@@ -109,7 +109,7 @@ int	tokenize_input(t_minishell *mini)
 		val = extract_next_token(mini);
 		if (mini->tokenizer->err || !val)
 			break ;
-		if (!check_expansion(mini, val))
+		if (!process_expansion(mini, val))
 		{
 			free(val);
 			return (0);

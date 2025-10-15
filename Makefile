@@ -6,7 +6,7 @@
 #    By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 14:20:26 by sofernan          #+#    #+#              #
-#    Updated: 2025/10/15 17:15:34 by sofernan         ###   ########.fr        #
+#    Updated: 2025/10/15 19:47:45 by sofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --track-
 
 OBJ_DIR = obj
 SRCS = process_input.c handle_incomplete_cmd.c split_cmd_line.c exec_builtin_parent.c \
-		handle_word_token.c init_glob.c split_loop_and_append.c execute_subshell.c \
+		handle_word_token.c init_glob.c command_split.c execute_subshell.c \
 		process_segment.c ft_cd.c execute_command.c handle_command.c expand_matches.c \
 		process_pipeline.c execute_pipeline.c extract_token_part.c tokenize_input.c \
 		process_command.c extract_next_token.c main.c parse_commands.c process_redir1.c process_redir2.c \
