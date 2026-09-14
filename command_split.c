@@ -69,7 +69,7 @@ int	process_double_operator(char *input, t_split_state *st, char *op)
 	char	*to_add;
 
 	segment = ft_substr(input, st->start, st->pos - st->start);
-	trimmed = trim_whitespace(segment);
+	trimmed = trim_spaces(segment);
 	free(segment);
 	if (trimmed)
 		to_add = trimmed;
@@ -117,7 +117,7 @@ void	extract_and_add_seg(char *input, t_split_state *st)
 		st->pos++;
 	}
 	segment = ft_substr(input, st->start, st->len - st->start);
-	trimmed = trim_whitespace(segment);
+	trimmed = trim_spaces(segment);
 	free(segment);
 	if (trimmed == NULL)
 		trimmed = ft_strdup("");

@@ -6,7 +6,7 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:02:20 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/15 19:49:33 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:47:41 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,9 @@ void		ft_export(t_minishell *mini);
 void		sort_env_array(t_env **arr, int count);
 void		ft_pwd(char **argv, char **env);
 void		ft_unset(t_minishell *mini);
-void		add_or_update_env(char *arg, t_minishell *mini);
+void		add_or_update_env_var(char *arg, t_minishell *mini);
 void		delete_env_var(char const *name, t_minishell *mini);
-void		mark_as_exported(char *name, t_minishell *mini);
+void		mark_var_as_exported(char *name, t_minishell *mini);
 void		add_node_env_list(t_minishell *mini, t_env *new);
 void		set_env_var(t_minishell *mini, char *name,
 				char *value, int exported);
@@ -265,8 +265,8 @@ int			is_builtin_cmd(char *str);
 int			is_numeric(char const *str);
 int			ft_exit(t_minishell *mini);
 int			count_exported_var(t_minishell *mini);
-int			is_valid_identifier(char const *str);
-int			process_export_arg(char *arg, t_minishell *mini);
+int			is_valid_var_name(char const *str);
+int			handle_export_cmd_arg(char *arg, t_minishell *mini);
 int			update_env_var(t_env *tmp, char *name, char *value, int exported);
 int			count_commands_list(t_minishell *mini);
 int			create_heredoc_file(const char *limiter, const char *filename,
@@ -293,13 +293,13 @@ int			is_token_char(char c);
 int			split_ops(char *input, char ***segments_out,
 				char ***ops_out, int *count_out);
 int			execute_subshell(t_minishell *parent, char *inner);
-int			is_outer_parenthesized(const char *s);
+int			has_outer_parentheses(const char *s);
 int			build_token_parts(t_minishell *mini, char **token,
 				t_token_quote *first_quote, int *mixed);
 int			str_has_slash(const char *s);
 int			match_class(const char **pp, char c);
 int			match_glob(const char *pat, const char *s);
-int			insert_sorted(char ***arr, size_t *count, size_t *cap, char *s);
+int			isert_sorted_str(char ***arr, size_t *count, size_t *cap, char *s);
 int			process_double_operator(char *input, t_split_state *st, char *op);
 int			split_cmd_line(char *input, char ***segments,
 				char ***ops, int *seg_count);
@@ -314,11 +314,11 @@ int			expand_matches(char *str, t_minishell *mini);
 int			try_open_dir(t_glob_ctx *ctx, char *str, t_minishell *mini);
 int			init_glob(const char *str, t_minishell *mini, t_glob_ctx *ctx);
 int			match_glob_star(const char *p, const char *str);
-int			process_dir(t_glob_ctx *ctx, char *str, t_minishell *mini);
-int			process_and_insert(t_glob_ctx *ctx, const char *name);
+int			process_directory(t_glob_ctx *ctx, char *str, t_minishell *mini);
+int			add_matched_path(t_glob_ctx *ctx, const char *name);
 int			write_heredoc_line(int fd, char *line, t_minishell *mini,
 				t_token_quote quote);
-int			ensure_capacity(char ***arr, size_t *count, size_t *cap);
+int			verify_resize_capacity(char ***arr, size_t *count, size_t *cap);
 int			parse_exit_code(const char *s, unsigned char *out_code,
 				int i, int neg);
 int			is_all_digits(const char *s);
@@ -341,13 +341,13 @@ char		*get_env_value(char const *name, t_env *env);
 char		**copy_env(char **env);
 char		**make_env_array(t_env *env_list);
 char		*join_and_free(char *s1, char *s2);
-char		*trim_whitespace(char *s);
-char		*strip_outer_parentheses(char *s, int *deleted);
+char		*trim_spaces(char *s);
+char		*delete_outer_parentheses(char *s, int *deleted);
 char		*join_token_parts(char *s1, char *s2);
 const char	*init_class(const char *p, char c, int *negate, int *matched);
 const char	*process_class_content(const char *p, char c, int *matched);
 t_env		*create_env_var(char *name, char *value, int exported);
-t_env		*find_env(t_env *env_list, char const *name);
+t_env		*find_env_var(t_env *env_list, char const *name);
 t_env		*create_env_list(char **envp, t_minishell *mini);
 t_token		*process_expansion(t_minishell *mini, char *val);
 t_token		*add_token(t_minishell *mini, char *value);

@@ -40,7 +40,7 @@ void	update_shlvl(t_minishell *mini)
 
 	if (!mini)
 		return ;
-	shlvl = find_env(mini->env_list, "SHLVL");
+	shlvl = find_env_var(mini->env_list, "SHLVL");
 	if (!shlvl)
 	{
 		set_env_var(mini, "SHLVL", "1", 1);

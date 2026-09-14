@@ -6,7 +6,7 @@
 #    By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 14:20:26 by sofernan          #+#    #+#              #
-#    Updated: 2025/10/15 19:47:45 by sofernan         ###   ########.fr        #
+#    Updated: 2025/10/16 16:26:21 by sofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ LIBFT = libft
 LIBFT_DIR = libft/
 LIBFT_LIB = $(LIBFT_DIR)libft.a
 LDFLAGS = -lreadline
-VALGRIND_VALE	:=	./new_suppression.supp
-VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --suppressions=$(VALGRIND_VALE) --trace-children=yes
 
 OBJ_DIR = obj
 SRCS = process_input.c handle_incomplete_cmd.c split_cmd_line.c exec_builtin_parent.c \
@@ -27,9 +25,9 @@ SRCS = process_input.c handle_incomplete_cmd.c split_cmd_line.c exec_builtin_par
 		process_segment.c ft_cd.c execute_command.c handle_command.c expand_matches.c \
 		process_pipeline.c execute_pipeline.c extract_token_part.c tokenize_input.c \
 		process_command.c extract_next_token.c main.c parse_commands.c process_redir1.c process_redir2.c \
-		utils_heredoc.c utils_execute.c exec_builtin_child.c process_dir.c match_glob.c \
+		utils_heredoc.c utils_execute.c exec_builtin_child.c process_directory.c match_glob.c \
 		make_env_array.c free_and_exit.c extract_quoted_token.c ft_export.c set_env_var.c \
-		expand_dollar.c extract_metachar.c free_minishell.c here_doc.c process_export_arg.c
+		expand_dollar.c extract_metachar.c free_minishell.c here_doc.c handle_export_cmd.c
 
 OBJS = $(SRCS:.c=.o)
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(OBJS))
@@ -65,9 +63,6 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-
-valgrind: re
-	valgrind $(VFLAGS) ./$(NAME)
 
 re: fclean all
 

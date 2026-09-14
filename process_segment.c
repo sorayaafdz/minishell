@@ -6,13 +6,13 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:44:09 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/15 16:18:27 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:47:41 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	is_outer_parenthesized(const char *s)
+int	has_outer_parentheses(const char *s)
 {
 	int		depth;
 	size_t	i;
@@ -41,7 +41,7 @@ int	is_outer_parenthesized(const char *s)
 	return (depth == 0 && i == ft_strlen(s) - 1);
 }
 
-char	*trim_whitespace(char *s)
+char	*trim_spaces(char *s)
 {
 	char	*start;
 	char	*end;
@@ -57,7 +57,7 @@ char	*trim_whitespace(char *s)
 	return (ft_substr(start, 0, end - start));
 }
 
-char	*strip_outer_parentheses(char *s, int *deleted)
+char	*delete_outer_parentheses(char *s, int *deleted)
 {
 	char	*cur;
 	char	*tmp;
@@ -68,17 +68,17 @@ char	*strip_outer_parentheses(char *s, int *deleted)
 		*deleted = 0;
 	if (!s)
 		return (NULL);
-	cur = trim_whitespace(s);
+	cur = trim_spaces(s);
 	if (!cur)
 		return (ft_strdup(""));
 	did_delete = 0;
-	while (is_outer_parenthesized(cur))
+	while (has_outer_parentheses(cur))
 	{
 		len = ft_strlen(cur);
 		tmp = ft_substr(cur, 1, len - 2);
 		if (!tmp)
 			return (NULL);
-		(free(cur), cur = trim_whitespace(tmp));
+		(free(cur), cur = trim_spaces(tmp));
 		(free(tmp), did_delete = 1);
 	}
 	if (deleted && did_delete)
@@ -94,7 +94,7 @@ void	process_segment(t_minishell *mini, char *segment)
 	is_group = 0;
 	if (!segment || *segment == '\0')
 		return ;
-	inner = strip_outer_parentheses(segment, &is_group);
+	inner = delete_outer_parentheses(segment, &is_group);
 	if (is_group)
 	{
 		if (inner)

@@ -6,7 +6,7 @@
 /*   By: sofernan <sofernan@student.42madrid.es>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 14:41:08 by sofernan          #+#    #+#             */
-/*   Updated: 2025/10/15 13:35:46 by sofernan         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:15:18 by sofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_export(t_minishell *mini)
 	}
 	while (mini->cmd_list->argv[i])
 	{
-		error = process_export_arg(mini->cmd_list->argv[i], mini);
+		error = handle_export_cmd_arg(mini->cmd_list->argv[i], mini);
 		i++;
 	}
 	g_status = error;

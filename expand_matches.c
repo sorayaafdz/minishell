@@ -70,7 +70,7 @@ int	expand_matches(char *str, t_minishell *mini)
 		return (1);
 	if (!try_open_dir(&ctx, str, mini))
 		return (1);
-	ok = process_dir(&ctx, str, mini);
+	ok = process_directory(&ctx, str, mini);
 	if (!ok)
 		return (1);
 	closedir(ctx.d);
