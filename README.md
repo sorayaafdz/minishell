@@ -14,8 +14,6 @@
 
 ---
 
-## 📖 About
-
 **Minishell** is a Unix shell implemented from scratch in **C**, inspired by the behavior of Bash.
 
 The project is part of the **42 Madrid Common Core** and focuses on understanding how a shell interacts with the operating system: reading user input, parsing commands, expanding variables, creating processes, connecting them through pipes, applying redirections and executing programs.
