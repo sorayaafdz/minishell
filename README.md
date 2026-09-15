@@ -1,4 +1,4 @@
-# Minishell 🐚
+# Minishell 
 
 <p align="center">
   <b>A Unix shell implemented from scratch in C</b>
